@@ -1,42 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-// import VideoGameCard from './VideoGameCard';
-// import VideoGameBoard from './VideoGameBoard';
-
-const VideoGameBoard = ({ videoGames }) => {
-  return (
-    <div className="container grid grid-cols gap-2">
-      {videoGames.map((videoGame, index) => (
-        <div
-          key={videoGame.id}
-          draggable="true"
-          className="draggable bg-gray-200 border border-gray-400 rounded-md p-4 min-h-24 cursor-move"
-        >
-          {index + 1} 
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const VideoGameCard = ({ videoGames }) => {
-  return (
-    <div className="container grid grid-cols gap-2">
-      {videoGames.map((videoGame, idx) => (
-        <div 
-          key={idx} 
-          draggable="true"
-          className="draggable bg-gray-200 border border-gray-400 rounded-md p-4 text-lg text-black cursor-move">
-            <h2 className="text-lg font-semibold">{videoGame.title}</h2>
-            <p className="text-sm text-gray-500">{videoGame.developer}</p>
-            <p className="text-sm text-gray-500">{videoGame.year}</p>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-
-////////////////////////////////////////////////////////////////////////
+import VideoGameCard from './VideoGameCard';
+import VideoGameBoard from './VideoGameBoard';
 
 
 const VideoGameList = () => {
@@ -70,15 +34,30 @@ const VideoGameList = () => {
     containersRef.current.forEach(container => {
       container.addEventListener("dragover", (e) => {
         e.preventDefault()
+        const afterElement = getDragAfterElement(container, e.clientY)
         const draggable = document.querySelector(".dragging")
-        container.appendChild(draggable)
-        // console.log("drag over");
+        if (afterElement == null) {
+          container.appendChild(draggable)
+        } else {
+          container.insertBefore(draggable, afterElement)
+        }
+        // console.log("afterElement");
       })
     });
   }, [videoGames]);
 
   function getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll(".draggable:not(.dragging)")]
     
+    return draggableElements.reduce((closest, child) => {
+      const box = child.getBoundingClientRect()
+      const offset = y - box.top - box.height / 2;
+      if (offset < 0 && offset > closest.offset) {
+        return { offset, element: child}
+      } else {
+        return closest
+      }
+    }, {offset: Number.NEGATIVE_INFINITY}).element
   }
 
   return (
