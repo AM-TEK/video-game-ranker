@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
 import VideoGameCard from './VideoGameCard';
-import VideoGameBoard from './VideoGameBoard';
 
 
 const VideoGameList = () => {
@@ -61,21 +60,15 @@ const VideoGameList = () => {
   }
 
   return (
-    <div className="p-8 bg-gray-300">
-      <h1 className="text-2xl font-bold text-black">
-        Video Games (1990-2009)
-      </h1>
-
-      <div className="grid grid-cols-2 gap-4 mt-4">
-          <VideoGameBoard 
-            videoGames={videoGames}
-          />
-          <VideoGameCard 
-            videoGames={videoGames}
-          />
+    <div className="flex justify-center">
+      <div className="w-2/5 py-4 bg-gray-300 max-h-screen overflow-y-auto rounded-lg">
+        <VideoGameCard 
+          videoGames={videoGames}
+        />
       </div>
     </div>
   );
+  
 };
 
 export default VideoGameList;
