@@ -1,11 +1,9 @@
 import { useEffect, useState, useRef } from 'react';
 import VideoGameCard from './VideoGameCard';
-
+import VideoGameForm from './VideoGameForm';
 
 const VideoGameList = () => {
   const [videoGames, setVideoGames] = useState([]);
-  // console.log('draggablesRef:', draggablesRef.current);
-  // console.log('containersRef:', containersRef.current);
   const draggablesRef = useRef([]);
   const containersRef = useRef([]);
 
@@ -22,7 +20,6 @@ const VideoGameList = () => {
     draggablesRef.current.forEach(draggable => {
       draggable.addEventListener("dragstart", () => {
         draggable.classList.add("dragging")
-        // console.log("drag start");
       })
 
       draggable.addEventListener("dragend", () => {
@@ -40,7 +37,6 @@ const VideoGameList = () => {
         } else {
           container.insertBefore(draggable, afterElement)
         }
-        // console.log("afterElement");
       })
     });
   }, [videoGames]);
@@ -62,6 +58,10 @@ const VideoGameList = () => {
   return (
     <div className="flex justify-center">
       <div className="w-2/5 py-4 bg-gray-300 max-h-screen overflow-y-auto rounded-lg">
+        <VideoGameForm
+          videoGames={videoGames}
+          setVideoGames={setVideoGames}
+        />
         <VideoGameCard 
           videoGames={videoGames}
         />
