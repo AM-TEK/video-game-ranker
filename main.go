@@ -67,7 +67,7 @@ func main() {
 	router := gin.Default()
 	// CORS middleware
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{"http://localhost:3001"}
 	router.Use(cors.New(config))
 
 	router.GET("/videoGames", getVideoGames)

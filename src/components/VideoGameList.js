@@ -57,7 +57,7 @@ const VideoGameList = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-2/5 py-4 bg-gray-300 max-h-screen overflow-y-auto rounded-lg">
+      <div className="w-2/3 max-h-screen py-4 overflow-y-auto bg-gray-300 rounded-lg">
         <VideoGameForm
           videoGames={videoGames}
           setVideoGames={setVideoGames}

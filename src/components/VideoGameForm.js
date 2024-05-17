@@ -49,7 +49,7 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
 
   const renderGameInputs = () => {
     return Array.from({ length: numGames }).map((_, index) => (
-      <div key={index}>
+      <div key={index} className='mb-5'>
         <label htmlFor={`title${index}`} className="block text-sm font-medium text-gray-700">
           Title {index + 1} <span className="text-red-500">*</span>
         </label>
@@ -60,7 +60,7 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
           value={formData[`title${index}`] || ''}
           onChange={handleChange}
           required
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="block w-full mb-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         <label htmlFor={`developer${index}`} className="block text-sm font-medium text-gray-700">
           Developer {index + 1}
@@ -71,7 +71,7 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
           name={`developer${index}`}
           value={formData[`developer${index}`] || ''}
           onChange={handleChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="block w-full mb-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
         <label htmlFor={`year${index}`} className="block text-sm font-medium text-gray-700">
           Year {index + 1}
@@ -82,14 +82,14 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
           name={`year${index}`}
           value={formData[`year${index}`] || ''}
           onChange={handleChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="block w-full mb-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         />
       </div>
     ));
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
       <div className="mb-4">
         <label htmlFor="numGames" className="block text-sm font-medium text-gray-700">
           Number of Games <span className="text-red-500">*</span>
@@ -99,7 +99,7 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
           name="numGames"
           value={numGames}
           onChange={handleNumGamesChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
         >
           {[...Array(20)].map((_, index) => (
             <option key={index} value={index + 1}>
@@ -111,7 +111,7 @@ const VideoGameForm = ({ videoGames, setVideoGames }) => {
       {renderGameInputs()}
       <button
         type="submit"
-        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="inline-flex items-center px-4 py-2 mb-5 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
       >
         Add Video Games
       </button>
