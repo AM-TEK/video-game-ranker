@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import VideoGameCard from './VideoGameCard';
 import VideoGameForm from './VideoGameForm';
+import VideoGameModal from './VideoGameModal';
 
 const VideoGameList = () => {
   const [videoGames, setVideoGames] = useState([]);
+  const [selectedVideoGame, setSelectedVideoGame] = useState(null);
   const draggablesRef = useRef([]);
   const containersRef = useRef([]);
 
@@ -55,6 +57,14 @@ const VideoGameList = () => {
     }, {offset: Number.NEGATIVE_INFINITY}).element
   }
 
+  const handleVideoGameClick = (videoGame) => {
+    setSelectedVideoGame(videoGame);
+  };
+
+  const closeModal = () => {
+    setSelectedVideoGame(null);
+  };
+
   return (
     <div className="flex justify-center">
       <div className="w-2/3 max-h-screen py-4 overflow-y-auto bg-gray-300 rounded-lg">
@@ -64,8 +74,16 @@ const VideoGameList = () => {
         />
         <VideoGameCard 
           videoGames={videoGames}
+          onClick={handleVideoGameClick}
         />
       </div>
+      {selectedVideoGame && (
+        <VideoGameModal
+          videoGame={selectedVideoGame}
+          isOpen={Boolean(selectedVideoGame)}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
   

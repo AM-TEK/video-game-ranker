@@ -9,10 +9,10 @@ import (
 
 //create struct to represent a video game
 type videoGame struct{
-	ID			string	`json:"id"`
-	Title		string	`json:"title"`
+	ID				string	`json:"id"`
+	Title			string	`json:"title"`
 	Developer	string	`json:"developer"`
-	Year		int		`json:"year"`
+	Year			int			`json:"year"`
 }
 
 //Initialize a slice of 'videoGames' containing instances of video game struct
@@ -67,7 +67,7 @@ func main() {
 	router := gin.Default()
 	// CORS middleware
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3001"}
+	config.AllowOrigins = []string{"http://localhost:3000"}
 	router.Use(cors.New(config))
 
 	router.GET("/videoGames", getVideoGames)
