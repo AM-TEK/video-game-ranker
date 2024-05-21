@@ -38,3 +38,10 @@ next-env.d.ts
 # binary file
 video-game-ranker
 .env
+
+# vendor files
+golang.org
+google.golang.org
+gopkg.in
+modules.txt
+thunder
