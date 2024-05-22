@@ -45,3 +45,8 @@ google.golang.org
 gopkg.in
 modules.txt
 thunder
+google
+lib
+
+#database
+internal

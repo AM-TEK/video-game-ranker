@@ -2,17 +2,20 @@ package main
 
 import (
 	// "errors"
-	"fmt"
+	// "fmt"
+	"database/sql"
 	"log"
 	"net/http"
 	"os"
 
 	// "github.com/gin-contrib/cors"
 	// "github.com/gin-gonic/gin"
+	"github.com/AM-TEK/video-game-ranker/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 //create struct to represent a video game
@@ -70,6 +73,10 @@ import (
 // 	return nil, errors.New("video game not found")
 // }
 
+type apiConfig struct {
+	DB *database.Queries
+}
+
 // create routers with the help of gin package
 func main() {
 	// router := gin.Default()
@@ -91,8 +98,29 @@ func main() {
 	if portString == "" {
 		log.Fatal("PORT is not found in environment.")
 	}
+
+	dbURL := os.Getenv("DB_URL")
+	if dbURL == "" {
+		log.Fatal("DB_URL is not found in environment.")
+	}
 	
-	fmt.Println("Port:", portString)
+	conn, err := sql.Open("postgres", dbURL)
+	if err != nil {
+		log.Fatal("Can't connect to database:", err)
+	}
+
+	// queries := database.New(conn)
+	// if err != nil {
+	// 	log.Fatal("Can't create to db connection:", err)
+	// }
+
+	// dbQueries := database.New(db)
+
+	// fmt.Println("Port:", portString)
+
+	apiCfg := apiConfig{
+		DB: database.New(conn),
+	}
 
 	router := chi.NewRouter()
 
@@ -108,6 +136,7 @@ func main() {
 	v1Router := chi.NewRouter()
 	v1Router.Get("/healthz", handlerReadiness)
 	v1Router.Get("/err", handlerErr)
+	v1Router.Post("/users", apiCfg.handlerCreateUser)
 
 	router.Mount("/v1", v1Router)
 
@@ -116,7 +145,7 @@ func main() {
 		Addr: ":" + portString,
 	}
 	log.Printf("Server starting on port %v", portString)
-	err := srv.ListenAndServe()
+	err = srv.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
